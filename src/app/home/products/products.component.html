@@ -1,0 +1,113 @@
+<p-progressBar mode="indeterminate" [style]="{'height': '6px'}" *ngIf="loading"></p-progressBar>
+  <div *ngIf="!loading" class="row">
+    <div style="font-size: small;" *ngIf="!loading" class="col-12 col-sm-12 col-md-8">
+        <p-header>
+          <h3 class="text-center">Products</h3>
+          <div class="text-center">
+            <button class="btn btn-sm btn-primary" type="button" (click)="showCurrencyDialog()">See Exchange Rates
+            </button>
+          </div>
+        </p-header>
+    </div>
+    <div class="col-12 col-md-4">
+      <form class="form-inline mr-auto" [formGroup] = "searchForm" (ngSubmit)="searchProduct(); myDrop.open()">
+        <div class="d-inline-block" ngbDropdown #myDrop="ngbDropdown">
+          <input formControlName="searchWord" class="form-control mr-sm-2" id="dropdownManual" ngbDropdownAnchor type="text" placeholder="Product Search" autocomplete="true"
+                 aria-label="Search"><button class="btn btn-success btn-sm my-0"><i class="mdi mdi-search-web"></i> search </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownManual">
+            <button ngbDropdownItem *ngFor="let result of results" routerLink="/product/{{result.id}}"> {{ result.name }} </button>
+          </div>
+
+          <!-- <button class="btn btn-outline-success mr-2" (click)="$event.stopPropagation(); myDrop.open();">Open from outside</button>
+           <button class="btn btn-outline-danger mr-2" (click)="$event.stopPropagation(); myDrop.close();">Close from outside</button> -->
+        </div>
+      </form>
+        <!-- Search form -->
+
+    </div>
+  </div>
+<div class="row">
+  <div class="col-12 col-sm-6 col-md-3" *ngFor="let product of products">
+    <!-- Card -->
+    <div class="card shadow">
+      <!-- Card image -->
+      <div routerLink="/product/{{product.id}}" class="view overlay" style="cursor: pointer">
+      <img class="card-img-top" src="{{ product.images[0] === undefined ? 'assets/images/logos/dlc_logo.jpeg' : product.images[0].url }}" alt="{{ product.images[0] === undefined ? 'Product image' : product.images[0].placeholder }}">
+        <a href="#!">
+          <div class="mask rgba-white-slight"></div>
+        </a>
+      </div>
+      <!-- Card content -->
+      <div class="card-body">
+        <!-- Title -->
+        <h4 routerLink="/product/{{product.id}}" class="card-title" style="cursor: pointer">{{ product.name }}
+          <p>Category : <strong> {{product.category.name}} </strong></p>
+        </h4>
+        <!-- Text -->
+        <div class="row">
+          <div class="col-6">
+            <h5> <strong>{{exCurrency.symbol}}</strong> {{ getRatedPrice(product.price) | number: '3.1-3'}} </h5>
+          </div>
+          <div class="col-6">
+            <button class="btn btn-sm btn-outline-success" (click) = "addToCart(product, 1)" ><i class="mdi mdi-cart-outline"></i> Buy </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Card -->
+  </div>
+</div>
+
+<p-dialog [(visible)]="cdialog" [modal]="true" [responsive]="true" [style]="{width: '350px', minWidth: '200px'}" [minY]="70"
+          [baseZIndex]="10000" [closable]="true">
+  <p-header>
+    See Other currencies and Rates
+  </p-header>
+  <div class="row" *ngIf="!loading">
+    <div class="col-4 card">
+      <div class="card-body">
+        <label>Base:<br> <b> {{getCurrencyObj().base.symbol}} ({{getCurrencyObj().base.name}})</b></label>
+      </div>
+    </div>
+    <div class="col-4 card">
+      <div class="card-body">
+        <label>Rated:<br> <b> {{exCurrency.symbol}} ({{exCurrency.name}})</b></label>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="!loading">
+    <div class="col-8 card">
+      <div class="card-body">
+        <label for="select-currency">Select currency</label>
+        <select class="form-control" id="select-currency" name="select-currency" [(ngModel)]="exchangeCurrency" (change)="getExchangeCurrency()">
+          <option value='"name":"{{getCurrencyObj().base.name}}", "symbol":"{{getCurrencyObj().base.symbol}}", "rate": {{getCurrencyObj().base.rate}}'
+                  selected>{{ currencyObj.base.symbol }} ({{currencyObj.base.name}}) Rate: {{currencyObj.base.rate | number: '3.1-3'}}</option>
+          <option *ngFor="let currency of getCurrencyObj().currencies"
+                  value='"name":"{{currency.name}}","symbol":"{{currency.symbol}}", "rate": {{currency.rate}}'>
+            {{ currency.symbol }} ({{currency.name}}) Rate: {{currency.rate | number: '3.1-3'}}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <button class="btn btn-sm"  (click)="cdialog=false">Ok</button>
+  </p-footer>
+</p-dialog>
+
+<div class="row">
+  <div class="col-md-3 col-lg-3 col-sm-6 pull-left">
+    <button [disabled]="!hasFirstPage()" style="width: 100%" class="btn btn-outline-success" (click)="loadFirstPage()" >  <i class="mdi mdi-skip-backward"></i> First </button>
+  </div>
+  <div class="col-md-3 col-lg-3 col-sm-6 pull-left">
+    <button [disabled]="!hasPrevPage()" style="width: 100%" class="btn btn-outline-success" (click)="loadPreviousPage()" >  <i class="mdi mdi-arrow-left"></i> Previous </button>
+  </div>
+  <div class="col-md-3 col-lg-3 col-sm-6 pull-left">
+    <button [disabled]="!hasNextPage()" style="width: 100%" class="btn btn-outline-success" (click)="loadNextPage()"> Next <i class="mdi mdi-arrow-right"></i> </button>
+  </div>
+  <div class="col-md-3 col-lg-3 col-sm-6 pull-left">
+    <button [disabled]="!hasLastPage()" style="width: 100%" class="btn btn-outline-success" (click)="loadLastPage()"> Last <i class="mdi mdi-skip-forward"></i> </button>
+  </div>
+</div>
+
+

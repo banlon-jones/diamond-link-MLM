@@ -1,0 +1,21 @@
+    <div class="card card-block">
+        <ng-template #tipMain>
+            <ul class="list-group" style="color: blueviolet;">
+              <li class="list-group-item list-group-item-primary"><img src="{{branch.imageUrl == null ? 'assets/images/logos/icon.jpg' : image_base_uri + branch.imageUrl}}" width="32">
+                {{branch.label}}
+              </li>
+            </ul>
+        </ng-template>
+        <div class="card-body">
+            <nav class="navbar navbar-light bg-secondary mb-1" >
+                <h1 style="color: blueviolet;text-overflow: none;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;" class="navbar-brand mb-0" placement="bottom" [ngbTooltip]="tipMain">{{branch.upLineRegistrationCode}} Columnar DownLines</h1>
+            </nav>
+        </div>
+    </div>
+<div class="">
+    <ul app-column-rack class="list-group list-group-flush">
+        <li class="list-group-item" *ngFor="let line of branch.children">
+          <b app-column-row [downline]="line" ></b>
+        </li>
+    </ul>
+  </div>

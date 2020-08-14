@@ -1,0 +1,17 @@
+<!--<p-progressBar mode="indeterminate" [style]="{'height': '6px'}" *ngIf="loading"></p-progressBar>-->
+<div app-show-order *ngFor="let order of orderObj" [order]="order">
+</div>
+<div class="row">
+  <div class="col-md-3 col-lg-3 col-sm-6 pull-left">
+    <button [disabled]="!hasFirstPage()" style="width: 100%" class="btn btn-outline-success" (click)="loadFirstPage()" >  <i class="mdi mdi-skip-backward"></i> First </button>
+  </div>
+  <div class="col-md-3 col-lg-3 col-sm-6 pull-left">
+    <button [disabled]="!hasPrevPage()" style="width: 100%" class="btn btn-outline-success" (click)="loadPreviousPage()" >  <i class="mdi mdi-arrow-left"></i> Previous </button>
+  </div>
+  <div class="col-md-3 col-lg-3 col-sm-6 pull-left">
+    <button [disabled]="!hasNextPage()" style="width: 100%" class="btn btn-outline-success" (click)="loadNextPage()"> Next <i class="mdi mdi-arrow-right"></i> </button>
+  </div>
+  <div class="col-md-3 col-lg-3 col-sm-6 pull-left">
+    <button [disabled]="!hasLastPage()" style="width: 100%" class="btn btn-outline-success" (click)="loadLastPage()"> Last <i class="mdi mdi-skip-forward"></i> </button>
+  </div>
+</div>

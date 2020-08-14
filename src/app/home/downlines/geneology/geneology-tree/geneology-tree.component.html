@@ -1,0 +1,30 @@
+<p-progressBar mode="indeterminate" [style]="{'height': '6px'}" *ngIf="loading"></p-progressBar>
+<p-scrollPanel [style]="{width: '100%', height: '100%'}">
+  <div class="row">
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+      <p-organizationChart [value]="data" styleClass="company">
+        <ng-template let-node pTemplate="downTree">
+          <div class="node-header ui-corner-top">
+            {{node.label}}
+          </div>
+          <div class="node-content ui-corner-bottom">
+            <img src="{{node.imageUrl == null ? 'assets/images/logos/icon.jpg' : base_uri + node.imageUrl}}" width="32">
+            <div>{{node.firstName}} {{node.lastName}}</div>
+          </div>
+        </ng-template>
+        <!--<ng-template let-node pTemplate="default">-->
+        <!--</ng-template>-->
+        <ng-template let-node pTemplate="new">
+          <button type="button" (click)="showDialog(node)" class="mdi mdi-plus-circle"></button>
+        </ng-template>
+        <ng-template let-node pTemplate="loadMore">
+          <button type="button" class="mdi mdi-chevron-down" (click)="loadMore3Levels(node)"></button>
+
+        </ng-template>
+      </p-organizationChart>
+      <p-dialog header="Position DownLine" [(visible)]="display" [responsive]="true" [style]="{width: '350px', minWidth: '200px'}" [minY]="70">
+        <app-add-node (onAddNode)="refresh()"></app-add-node>
+      </p-dialog>
+    </div>
+  </div>
+</p-scrollPanel>

@@ -1,0 +1,256 @@
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<div class="signup" style="background-image:url('assets/images/background/mesh.png')">
+  <div class="row" id="login_card">
+    <div class="col-10 col-sm-8 col-md-10 offset-1 col-lg-8 offset-sm-2 offset-md-1 offset-lg-2">
+      <div class="row">
+        <div class="card text-white col-md-6 col-lg-6 shadow" style="background-color: #9B2AB6">
+          <div class="card-body text-center">
+            <div class="text-center">
+              <img src="assets/images/logos/dlc_logo.jpeg" height="150" width="120" class="img-fluid" alt="Diamond Link Venture" style="border-radius: 50%">
+            </div>
+            <div class="card-title text-white"><h3>Welcome To Diamond Link Corporation</h3></div>
+            <p class="card-text">Fill out the 3-step form to create an account with us. At the end of every step, click the next tab, providing the required information at each stage.
+              Please ensure that the information provided is correct because your account will be suspended if it is flagged and confirmed for impersonation.
+            </p>
+            <p class="card-text">
+              <a routerLink="/welcome">Visit our Welcome page</a>
+            </p>
+            <a routerLink="/signin"> back to signin </a>
+          </div>
+        </div>
+        <div class="card col-md-6 col-lg-6 shadow" style="background-color: #F6F6F6">
+          <div class="card-body">
+            <h3 class="card-title text-center"> Signup </h3>
+            <ngb-tabset class="tab-basic">
+              <ngb-tab>
+                <ng-template ngbTabTitle>
+                  <i class="mdi mdi-home-outline"></i>Pesonal
+                </ng-template>
+                <ng-template ngbTabContent>
+                  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+
+                    <div class="form-group">
+                      <label> First Name </label>
+                      <input type="text" class="form-control" placeholder="Enter Your First Name" formControlName="firstName">
+                    </div>
+                    <div class="form-group">
+                      <label> Last Name </label>
+                      <input type="text" class="form-control" placeholder="Enter Your Last Name" formControlName="lastName">
+                    </div>
+
+                    <div class="form-group">
+                      <label> Email </label>
+                      <input type="email" class="form-control" placeholder="Enter Your email" formControlName="email">
+
+                    </div>
+                    <div class="form-group">
+                      <label> Phone Number </label>
+                      <input type="email" class="form-control" placeholder="Enter Your phone number" formControlName="phone">
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gender"> Gender </label>
+                        <select class="form-control" id="gender" formControlName="gender">
+                          <option disabled selected>select Gender</option>
+                          <option value="male">Male</option>
+                          <option value="female">Female</option>
+                          <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                      <!--<i class="pi pi-spin pi-spinner" *ngIf="loading" style="font-size: 3em"></i>-->
+                      <label for="country"> Country </label>
+                      <select class="form-control" id="country" formControlName="countryId">
+                        <option disabled selected>select your country</option>
+                        <option *ngFor="let country of countries" value="{{country.id}}">{{ country.name }}</option>
+                      </select>
+
+                    </div>
+
+                  </form>
+                  <br>
+                  <br>
+                </ng-template>
+              </ngb-tab>
+
+              <ngb-tab>
+                <ng-template ngbTabTitle>
+                  <i class="mdi mdi-account-outline"></i> Profile
+                </ng-template>
+                <ng-template ngbTabContent>
+                  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+
+                    <div class="form-group">
+                      <label> UpLine Registration code </label>
+                      <input type="text" class="form-control" placeholder="Enter registration code" formControlName="upLineRegistrationCode">
+                    </div>
+
+
+
+                    <div class="form-group">
+                      <label> username </label>
+                      <input type="email" class="form-control" placeholder="Enter your username" formControlName="username">
+                    </div>
+
+                    <div class="form-group">
+                      <label> Password </label>
+                      <input type="password" class="form-control" placeholder="Enter Password" formControlName="password">
+                    </div>
+
+                    <div class="form-group">
+                      <label> Confirm Password </label>
+                      <input type="password" class="form-control" placeholder="Enter password again" formControlName="passwordConfirm">
+                    </div>
+                  </form>
+                </ng-template>
+              </ngb-tab>
+              <ngb-tab>
+                <ng-template ngbTabTitle>
+                  <i class="mdi mdi-cart"></i> Products
+                </ng-template>
+                <ng-template ngbTabContent>
+                  <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+                    <p-progressBar mode="indeterminate" [style]="{'height': '6px'}" *ngIf="loading"></p-progressBar>
+                    <div *ngIf="!loading" class="row">
+                      <div style="font-size: small;" *ngIf="!loading" class="col-12">
+                        <p-header>
+                          <h3 class="text-center">Product Packages</h3>
+                          <div class="text-center">
+                            <button class="btn btn-sm btn-primary" type="button" (click)="showCurrencyDialog()">See Exchange Rates
+                            </button>
+                          </div>
+                        </p-header>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <!--<i class="pi pi-spin pi-spinner" *ngIf="loading" style="font-size: 3em"></i>-->
+                      <label for="package"> Select Registration Package </label>
+                      <select class="form-control" id="package" formControlName="registrationPackageId">
+                        <option disabled selected>select your package : currency - {{exCurrency.symbol}}</option>
+                        <option  *ngFor="let package of registrationPackages" value="{{package.id}}">
+                          Total: {{getRatedPrice(package.total) | number: '3.1-3'}} | products: {{getRatedPrice(package.products) | number: '3.1-3'}} | share cap: {{getRatedPrice(package.shareCap) | number: '3.1-3'}}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="jumbotron">
+                      All Product packages attached to registration are subjected to 19.25% tax inclusive and a share capacity of
+                      <b>{{getRatedPrice(registrationPackages[0].shareCap) | number: '3.1-3'}} {{exCurrency.symbol}}</b> inclusive irrespective of a product package
+                      one chooses, every member of DLC enjoys the same beneficial plan which is calculated
+                      on a share capital of <b>{{getRatedPrice(registrationPackages[0].shareCap) | number: '3.1-3'}} {{exCurrency.symbol}}</b>
+                    </div>
+                    <!--<div class="row" style="margin: 10px;">
+                      <ul class="list-group">
+                        <li class="shadow list-group-item" style="margin: 5px;" *ngFor="let product of products">
+                          <div class="row">
+                            <div style="float: left">
+                              <img src="{{ product.images[0] === undefined ?
+                            'assets/images/logos/dlc_logo.jpeg' : base_url + product.images[0].url}}" alt="Card image cap"
+                                   style="width: 20px; height: 20px; border-radius: 100%;">
+                            </div>
+                            <div style="font-size: 12px; float:right;">
+                              {{ product.name }}
+                              : <strong> {{product.category.name}} </strong>
+                            </div>
+                          </div>
+                          <div class="clearfix"></div>
+                              <div class="row">
+                                <div style="font-size: 12px;">
+                                   <strong>{{exCurrency.symbol}}</strong> {{ getRatedPrice(product.price) | number: '3.1-3'}}
+                                </div>
+                              </div>
+                          <div class="row" style="float: right;">
+                            <a role="button" class="btn btn-sm btn-outline-success" style="font-size: 12px; cursor: pointer;" (click) = "addToRegistrationCart(product, 1)" ><i class="mdi mdi-cart-outline"></i> Add </a>
+                          </div>
+                        </li>
+                      </ul>
+                      <div class="row">
+                        <div class="col-md-6 col-lg-6 col-sm-6 pull-left">
+                          <button type="button" *ngIf="hasFirstPage()" style="width: 100%" class="btn btn-outline-success" (click)="loadFirstPage()" >  <i class="mdi mdi-skip-backward"></i> First </button>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-sm-6 pull-left">
+                          <button type="button" *ngIf="hasPrevPage()" style="width: 100%" class="btn btn-outline-success" (click)="loadPreviousPage()" >  <i class="mdi mdi-arrow-left"></i> Previous </button>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-sm-6 pull-left">
+                          <button type="button" *ngIf="hasNextPage()" style="width: 100%" class="btn btn-outline-success" (click)="loadNextPage()"> Next <i class="mdi mdi-arrow-right"></i> </button>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-sm-6 pull-left">
+                          <button type="button" *ngIf="hasLastPage()" style="width: 100%" class="btn btn-outline-success" (click)="loadLastPage()"> Last <i class="mdi mdi-skip-forward"></i> </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="card">
+                          <div class="card-title text-center" style="margin: 2px;">
+                            <h3>Registration Cart</h3>
+                          </div>
+                          <div class="card-body">
+                            <p-scrollPanel [style]="{width: '100%', height: '100%'}">
+                            <table app-reg-cart-table class="table table-hover" style="font-size: 5px;">
+                              <tr app-reg-cart-table-row *ngFor="let cartItem of getRegistrationCartItems()"
+                                  [cartItem]="cartItem" [price]="getRatedPrice(cartItem.product.price)" [base_url]="base_url"></tr>
+                            </table>
+                            </p-scrollPanel>
+                          </div>
+                          <div class="card-footer">
+                            <div class="text-center">
+                              Cart Total: {{getCartTotal() | number: '3.1-3'}} <b *ngIf="!loading">{{exCurrency.symbol}}</b>
+                            </div>
+                          </div>
+                        </div>
+                    </div>-->
+                    <div class="row">
+                      <button class="btn btn-lg col-12 text-white" type="submit" [disabled]="!signupForm.valid"
+                              style="background-color: #9B2AB6" (click)="showDialog()"> Register </button>
+                    </div>
+                  </form>
+                </ng-template>
+              </ngb-tab>
+            </ngb-tabset>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p-dialog [(visible)]="display" [modal]="true" [responsive]="true" [style]="{width: '90px', minWidth: '90px', height: '70px', textAlign: 'center'}"
+          [baseZIndex]="10000" [closable]="false" [showHeader]="false">
+  <p-progressSpinner [style]="{width: '50px', height: '50px'}" strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+</p-dialog>
+<p-dialog [(visible)]="atProduct" [modal]="true" [responsive]="true" [style]="{width: '350px', minWidth: '200px'}" [minY]="70"
+          [baseZIndex]="10000" [closable]="true">
+  <p-header>
+    See Other currencies and Rates
+  </p-header>
+  <div class="row" *ngIf="!loading">
+    <div class="col-6 card">
+      <div class="card-body">
+        <label>Base:<br> <b> {{getCurrencyObj().base.symbol}} ({{getCurrencyObj().base.name}})</b></label>
+      </div>
+    </div>
+    <div class="col-6 card">
+      <div class="card-body">
+        <label>Rated:<br> <b> {{exCurrency.symbol}} ({{exCurrency.name}})</b></label>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="!loading">
+    <div class="col-12 card">
+      <div class="card-body">
+        <label for="select-currency">Select currency</label>
+        <select class="form-control" id="select-currency" name="select-currency" [(ngModel)]="exchangeCurrency" (change)="getExchangeCurrency()">
+          <option value='"name":"{{getCurrencyObj().base.name}}", "symbol":"{{getCurrencyObj().base.symbol}}", "rate": {{getCurrencyObj().base.rate}}'
+                  selected>{{ getCurrencyObj().base.symbol }} ({{getCurrencyObj().base.name}}) Rate: {{getCurrencyObj().base.rate | number: '3.1-3'}}</option>
+          <option *ngFor="let currency of getCurrencyObj().currencies"
+                  value='"name":"{{currency.name}}","symbol":"{{currency.symbol}}", "rate": {{currency.rate}}'>
+            {{ currency.symbol }} ({{currency.name}}) Rate: {{currency.rate | number: '3.1-3'}}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <button class="btn btn-sm"  (click)="atProduct=false">Ok</button>
+  </p-footer>
+</p-dialog>

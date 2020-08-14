@@ -1,0 +1,272 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="card col-12">
+      <div class="card-body">
+        <h4 class="card-title"> products  </h4>
+        <span class="pull-right">
+          <button type="button" class="btn btn-sm shadow text-white" style="background-color: #9B2AB6" (click)="open(content)">
+             add product </button>
+        </span>
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+            <tr>
+              <th> # </th>
+              <th> name </th>
+              <th> in stock </th>
+              <th> price </th>
+              <th> measurement </th>
+              <th> Tags </th>
+              <th> volume </th>
+              <th> weight </th>
+              <th> category </th>
+              <th> actions </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let product of products; let i = index">
+              <td> {{ i + 1 }} </td>
+              <td> {{ product.name }} </td>
+              <td> {{ product.isInStock }} </td>
+              <td> {{ product.price }} </td>
+              <td> {{ product.measurementUnit.name }} </td>
+              <td> {{ product.tags }} </td>
+              <td> {{ product.volume }} </td>
+              <td> {{ product.weight }} kg </td>
+              <td> {{ product.category.name }} </td>
+              <td>
+                <button class="btn btn-sm btn-success" (click)="openEditModel(editContent)" (click)="getProduct(product.id)"><i class="mdi mdi-pencil"> </i></button>
+                <button class="btn btn-sm btn-info" (click)="productimage(product.id)" (click)="openImageModel(productImage, product.id)"><i class="mdi mdi-camera"></i> Add image </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add product modal -->
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title"> add product </h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <form [formGroup]="addProductForm" (ngSubmit)="addProduct()">
+        <div class="col-12">
+          <div class="form-group">
+            <label> Name </label>
+            <input type="text" class="form-control" placeholder="product name" formControlName="name">
+          </div>
+          <div class="form-group">
+            <label> Description </label>
+            <textarea class="form-control" placeholder="product description" rows="5" formControlName="description"></textarea>
+          </div>
+          <div class="form-group">
+            <label> Code </label>
+            <input type="text" class="form-control" placeholder="product code" formControlName="code">
+          </div>
+          <div class="form-group">
+            <label> Price </label>
+            <input type="number" class="form-control" placeholder="product code" formControlName="price">
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <div class="card">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label> Is in stock </label>
+                    <select class="form-control" formControlName="isInStock">
+                      <option value="true" selected> True </option>
+                      <option value="false"> False </option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label> Is Combo </label>
+                    <select class="form-control" formControlName="isCombo">
+                      <option value="true" selected> True </option>
+                      <option value="false"> False </option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label> weight </label>
+                    <input type="number" class="form-control" formControlName="weight">
+                  </div>
+                  <div class="form-group">
+                    <label> Volume </label>
+                    <input type="number" class="form-control" formControlName="volume">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="card">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label> Select product category </label>
+                    <select class="form-control" formControlName="categoryId">
+                      <option *ngFor="let category of categories" value="{{category.id}}"> {{category.name}} </option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label> select measurement units </label>
+                    <select class="form-control" formControlName="measurementUnitId">
+                      <option *ngFor="let unit of units" value="{{unit.id}}"> {{unit.name}} </option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label> Tags </label>
+                    <input type="text" class="form-control" placeholder="product tag" formControlName="tags">
+                  </div>
+                  <div class="form-group">
+                    <label> Registration Product </label>
+                    <select class="form-control" formControlName="isRegistrationProduct">
+                      <option value="true"> True </option>
+                      <option value="false" selected> False </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-sm text-white" style="background-color: #9B2AB6" (click)="c('Save click')" (click)="addProduct()"> Save </button>
+  </div>
+</ng-template>
+
+<!-- Edit product modal -->
+<ng-template #editContent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title"> edit product </h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <form [formGroup]="editProductForm" (ngSubmit)="updateProduct()">
+        <div class="col-12">
+          <div class="form-group">
+            <label> Name </label>
+            <input type="text" class="form-control" placeholder="product name" formControlName="name">
+          </div>
+          <div class="form-group">
+            <label> Description </label>
+            <textarea class="form-control" placeholder="product description" rows="5" formControlName="description"></textarea>
+          </div>
+          <div class="form-group">
+            <label> Code </label>
+            <input type="text" class="form-control" placeholder="product code" formControlName="code">
+          </div>
+          <div class="form-group">
+            <label> Price </label>
+            <input type="number" class="form-control" placeholder="product code" formControlName="price">
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <div class="card">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label> Is in stock </label>
+                    <select class="form-control" formControlName="isInStock">
+                      <option value="true" selected> True </option>
+                      <option value="false"> False </option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label> Is Combo </label>
+                    <select class="form-control" formControlName="isCombo">
+                      <option value="true" selected> True </option>
+                      <option value="false"> False </option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label> weight </label>
+                    <input type="number" class="form-control" formControlName="weight">
+                  </div>
+                  <div class="form-group">
+                    <label> Volume </label>
+                    <input type="number" class="form-control" formControlName="volume">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="card">
+                <div class="card-body">
+
+                  <div class="form-group">
+                    <label> Select product category </label>
+                    <select class="form-control" formControlName="categoryId">
+                      <option *ngFor="let category of categories" value="{{category.id}}"> {{category.name}} </option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label> select measurement units </label>
+                    <select class="form-control" formControlName="measurementUnitId">
+                      <option *ngFor="let unit of units" value="{{unit.id}}"> {{unit.name}} </option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label> Tags </label>
+                    <input type="text" class="form-control" placeholder="product tag" formControlName="tags">
+                  </div>
+                  <div class="form-group">
+                    <label> Registration Product </label>
+                    <select class="form-control" formControlName="isRegistrationProduct">
+                      <option value="true"> True </option>
+                      <option value="false" selected> False </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-sm text-white" style="background-color: #9B2AB6" (click)="c('Save click')" (click)="updateProduct()"> Save </button>
+  </div>
+</ng-template>
+
+<!-- Add product image modal -->
+<ng-template #productImage let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title"> add product image </h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup] = "uploadImage" (ngSubmit)="uploadProductImage()">
+      <div class="form-group">
+        <label> Number </label>
+        <input class="form-control" type="number" formControlName="number">
+      </div>
+      <div class="form-group">
+        <label> Placeholder </label>
+        <input class="form-control" type="text" formControlName="placeholder">
+      </div>
+      <p-progressBar mode="indeterminate" [style]="{'height': '6px'}" *ngIf="progressBar"></p-progressBar>
+      <div class="form-group">
+        <label for="exampleFormControlFile1"> image </label>
+        <input class="form-control form-control-lg" type="file" id="exampleFormControlFile1" placeholder="Product Image" required formControlName="image" (change)="detectFiles($event)">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-sm text-white" style="background-color: #9B2AB6" (click)="c('Save click')" (click)="uploadProductImage()"><i class="mdi mdi-cloud-upload"></i> Upload </button>
+  </div>
+</ng-template>

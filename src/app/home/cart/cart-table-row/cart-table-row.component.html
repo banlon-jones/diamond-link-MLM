@@ -1,0 +1,10 @@
+<td>{{ itemIndex + 1 }}</td>
+<td><img src="{{ (cartItem.product.images !== undefined && cartItem.product.images.length === 0) ?
+                            'https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg' : cartItem.product.images[0]}}" alt="Card image cap"
+         style="width: 20px; height: 20px; border-radius: 100%;">{{cartItem.product.name}}</td>
+<td>{{price | number: '3.1-3'}}</td>
+<td style="width: 50%"><input type="number" style="width: 100%;"
+                              [(ngModel)]="quantity" max="{{cartItem.product.stock}}" (change)="updateCartItem(cartItem.product, quantity)"></td>
+<td>{{cartItem.quantity * price | number: '3.1-3'}}</td>
+<td><button class="btn btn-sm" (click)="removeCartItem(cartItem.product.id)"><i class="mdi mdi-delete"></i></button> </td>
+

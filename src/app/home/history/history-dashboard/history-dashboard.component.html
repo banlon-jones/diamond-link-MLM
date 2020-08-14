@@ -1,0 +1,47 @@
+<p-progressBar mode="indeterminate" [style]="{'height': '6px'}" *ngIf="loading"></p-progressBar>
+<p-scrollPanel [style]="{width: '100%', height: '100%'}">
+  <div class="row" *ngIf="paymentHistoryAsSender !== undefined">
+    <div class="d-flex align-items-stretch grid-margin">
+      <div class="row flex-grow">
+        <div class="col-12 grid-margin">
+          <div class="card shadow">
+            <div class="card-header">
+              <div class="row">
+                <div class="col-12">
+                  <h4 class="card-title text-center">Payment History: As sender</h4>
+                </div>
+              </div>
+            <div class="card-body">
+              <table app-history-list class="table table-hover table-bordered">
+                <tr app-history-list-row *ngFor="let paymentHistoryRow of paymentHistoryAsSender" [paymentHistoryRow]="paymentHistoryRow"></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="row" *ngIf="paymentHistoryAsReceiver !== undefined">
+    <div class="d-flex align-items-stretch grid-margin">
+      <div class="row flex-grow">
+        <div class="col-12 grid-margin">
+          <div class="card shadow">
+            <div class="card-header">
+              <div class="row">
+                <div class="col-12">
+                  <h4 class="card-title text-center">Payment History: As Receiver</h4>
+                </div>
+              </div>
+              <div class="card-body">
+                <table app-history-list class="table table-hover table-bordered">
+                  <tr app-history-list-row *ngFor="let paymentHistoryR of paymentHistoryAsReceiver" [paymentHistoryRow]="paymentHistoryR"></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-scrollPanel>

@@ -1,0 +1,39 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+  <ul class="nav">
+    <li class="nav-item nav-profile">
+      <div class="nav-link">
+        <div class="user-wrapper">
+          <div class="profile-image">
+            <img src="{{getCustomerDetails().avatar == null ? 'assets/images/logos/icon.jpg' : image_base_uri + getCustomerDetails().avatar}}" alt="none">
+          </div>
+          <div class="text-wrapper">
+            <p class="profile-name">{{getCustomerDetails().firstName}} {{getCustomerDetails().lastName}}</p>
+            <div>
+              <small class="designation text-muted">{{userActivation ? (getCustomerDetails().isAdmin ? 'Admin/Manager' : 'Member'): 'User'}}</small>
+              <span class="status-indicator online"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <ul class="nav">
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/welcome">
+        <i class="menu-icon mdi mdi-home"></i>
+        <span class="menu-title">D. L. C</span>
+      </a>
+    </li>
+    <li class="nav-item" app-sidebar-link *ngFor="let permission of getCustomerPermission().notCollapsible" [permission]="permission">
+    </li>
+    <li class="nav-item" app-sidebar-collapsible-link *ngFor="let collapsiblePermission of getCustomerPermission().collapsible"
+        [collapsiblePermission]="collapsiblePermission">
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" (click)="logout()" id="logout">
+        <i class="menu-icon mdi mdi-logout"></i>
+        <span class="menu-title">Logout</span>
+      </a>
+    </li>
+  </ul>
+</nav>

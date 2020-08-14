@@ -1,0 +1,99 @@
+<p-toast [style]="{marginTop: '80px'}" position="top-left"></p-toast>
+<div class="row">
+  <div class="col-12">
+    <div class="jumbotron text-white" style="background-color: #800080">
+      <div class="pull-right">
+        <div class="card bg-success">
+          <div class="card-body">
+            <h1> # 100 <br> Credit  </h1>
+          </div>
+        </div>
+      </div>
+      <h1 class="display-4"> REFER FRIENDS & EARN CREDITS </h1>
+      <p class="lead"> Introduce a friend to diamond link conglomerates and earn referral bonuses </p>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Share your referral link with friends and family </h5>
+        <div class="input-group mb-3">
+          <form [formGroup] = "referralForm" class="col-12" (submit)="addMailAddress()">
+            <div class="input-group mb-2 mr-sm-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><a role="button" style="cursor: pointer;" (click)="copyToClipBoard(newUrl)"><i class="mdi mdi-link"></i> Copy Link </a></div>
+              </div>
+              <input type="text" class="form-control" id="inlineFormInputGroupUsername2" placeholder="Referral Link" formControlName="referralLink">
+            </div>
+            <div class="input-group mb-2 mr-sm-2">
+              <label>Add a Referral Email to send link</label>
+            </div>
+            <div class="input-group mb-2 mr-sm-2">
+              <div class="input-group-text">
+                <input type="text" class="form-control" placeholder="Enter name" formControlName="referralName">
+                <input type="email" class="form-control" placeholder="Enter email" formControlName="referralEmail">
+                <button type="submit" class="btn btn-success btn-sm" [disabled]="!referralForm.valid"><i class="mdi mdi-plus"></i> Add </button>
+              </div>
+            </div>
+          </form>
+          <ul class="list-group">
+            <li class="list-group-item" *ngFor="let address of loadAddresses()">
+              {{address.name}}: <{{address.email}}> <button type="button" class="btn btn-sm btn-outline-danger"
+                                                            (click)="removeMailAddress(address)"><i class="mdi mdi-delete"></i></button>
+            </li>
+            <li *ngIf="hasMail()" class="list-group-item">
+              <a role="button" style="cursor: pointer; width: 100%;" class="btn btn-info" (click)="sendReferralMail()">
+                <i class="menu-icon mdi mdi-send"></i> Send</a>
+            </li>
+          </ul>
+        </div>
+        <!--<div class="pull-right row">
+            <a role="button" style="cursor: pointer;" class="btn btn-info btn-rounded col-lg-2 col-sm-4"><i class="menu-icon mdi mdi-facebook"></i> facebook</a>
+            <a role="button" style="cursor: pointer;" class="btn btn-danger btn-rounded col-lg-2 col-sm-4"><i class="menu-icon mdi mdi-google"></i> Google plus </a>
+            <a role="button" style="cursor: pointer;" class="btn btn-info btn-rounded col-lg-2 col-sm-4"><i class="menu-icon mdi mdi-twitter"></i> Twitter </a>
+            <a role="button" style="cursor: pointer;" class="btn btn-secondary btn-rounded col-lg-2 col-sm-4"><i class="menu-icon mdi mdi-instagram"></i> Instagram </a>
+            <a role="button" style="cursor: pointer;" class="btn btn-success btn-rounded col-lg-2 col-sm-4"><i class="menu-icon mdi mdi-whatsapp"></i> Whatsapp </a>
+        </div>-->
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<br>
+<!--<div class="row">
+  <div class="col-12 col-md-3">
+    <div class="card">
+      <div class="card-body text-center">
+        <h4> 120 </h4>
+        <i class="fa fa-users icon-lg"></i>
+        <h4> Referrals signups </h4>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-3">
+    <div class="card">
+      <div class="card-body text-center">
+        <h4> 54 </h4>
+        <i class="fa fa-handshake-o icon-lg"></i><br>
+        <h4> Successful Referrals </h4>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-3">
+    <div class="card">
+      <div class="card-body text-center">
+        <h4> 12 </h4>
+        <i class="fa fa-users icon-lg"></i><br>
+        <h4> Referrals signups </h4>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-3">
+    <div class="card">
+      <div class="card-body text-center">
+        <h4> $ 1200 </h4>
+        <i class="fa fa-money icon-lg"></i><br>
+        <h4> Credit earned </h4>
+      </div>
+    </div>
+  </div>
+</div>-->
+

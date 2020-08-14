@@ -1,0 +1,48 @@
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<div class="row">
+  <div class="card col-md-6 col-lg-6 shadow" style="background-color: #F6F6F6"><br>
+    <div class="card-body">
+      <h3 class="card-title text-center"> Create a voucher </h3>
+      <form [formGroup] = "voucherForm" (ngSubmit) = "onSubmit()">
+        <div class="row">
+          <div class="form-group col-12">
+            <input class="form-control form-control-lg" type="password" placeholder=" Password " required formControlName="password">
+            <input class="form-control form-control-lg" type="number" placeholder=" amount " required formControlName="amount">
+          </div>
+        </div>
+        <div class="row">
+          <button type="submit" class="btn col-12 text-white shadow"
+                  [disabled]="!voucherForm.valid" style="background-color: #9B2AB6"> Create </button>
+        </div>
+      </form>
+      <div class="row" style="margin-top: 5px;">
+        <a type="button" role="button" style="color: blue" class="btn btn-sm col-12 btn-primary text-center" (click)="showMakerDialog()">create maker account </a>
+      </div>
+      <br>
+    </div>
+  </div>
+  <div class="card col-md-6 col-lg-6 shadow" style="background-color: #F6F6F6" *ngIf="created"><br>
+    <div class="card-body">
+      <h3 class="card-title text-center"> Voucher </h3>
+      <h4> <label>Code: </label> <strong>{{voucherValue.code}}</strong></h4>
+      <h4 class="card-title"> <label>Amount: </label> <code>{{voucherValue.amount}}</code></h4>
+  </div>
+</div>
+<p-dialog [(visible)]="mdialog" [modal]="true" [responsive]="true" [style]="{width: '350px', minWidth: '200px'}" [minY]="70"
+          [baseZIndex]="10000" [closable]="true">
+  <p-header>
+    Create Maker Account
+  </p-header>
+  <div class="row" >
+    <div class="col-6 card">
+      <div class="card-body">
+        <label>Password</label>
+        <input class="form-control" type="password" [(ngModel)]="password">
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <button class="btn btn-sm"  (click)="createMakerAccount()">Ok</button>
+  </p-footer>
+</p-dialog>
+

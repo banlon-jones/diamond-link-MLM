@@ -1,0 +1,79 @@
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<div class="card">
+  <ngb-tabset class="tab-basic">
+    <ngb-tab>
+      <ng-template ngbTabTitle>
+        <i class="mdi mdi-home-outline"></i> Profile
+      </ng-template>
+      <ng-template ngbTabContent>
+        <p-progressBar mode="indeterminate" [style]="{'height': '6px'}" *ngIf="loading"></p-progressBar>
+        <form class="forms-sample" [formGroup] = "editForm" (submit)="onSubmit()">
+          <div class="form-group row">
+            <div class="col-md-3">
+              <label>Date of Birth</label>
+              <input type="date" class="form-control" placeholder="Enter Date of Birth" formControlName="birthDate">
+            </div>
+            <div class="col-md-3">
+              <label>Place of Birth</label>
+              <input type="text" class="form-control" placeholder="Enter Place of Birth" formControlName="birthPlace">
+            </div>
+            <div class="col-md-3">
+              <label>Phone number</label>
+              <input type="number" class="form-control" placeholder="Enter Phone number" formControlName="phone">
+            </div>
+          </div>
+        <div class="form-group row">
+          <div class="col-md-3">
+            <!--<i class="pi pi-spin pi-spinner" *ngIf="loading" style="font-size: 3em"></i>-->
+            <label for="country"> Country </label>
+            <select class="form-control" id="country" formControlName="countryId">
+              <option *ngFor="let country of countries" value="{{country.id}}">{{ country.name }}</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>State</label>
+            <input type="text" class="form-control" placeholder="Enter State" formControlName="state">
+          </div>
+          <div class="col-md-3">
+            <label>City/Town</label>
+              <input type="text" class="form-control" placeholder="Enter City/Town" formControlName="city">
+          </div>
+          <div class="col-md-3">
+            <label> Address </label>
+            <input type="text" class="form-control" formControlName="address">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-3">
+            <label> Nationality </label>
+            <input type="text" class="form-control" placeholder="Enter nationality" formControlName="nationality">
+          </div>
+          <div class="col-md-3">
+            <label> National Id/Passport Number </label>
+            <input type="text" class="form-control" placeholder="Enter ID Number" formControlName="idNumber">
+          </div>
+          <div class="col-md-3">
+            <label> zip code</label>
+              <input type="text" class="form-control" formControlName="zipCode">
+          </div>
+        </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-success mr-2"> save change </button>
+          </div>
+        </form>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab>
+      <ng-template ngbTabTitle>
+        <i class="mdi mdi-account-outline"></i>Change Password
+      </ng-template>
+      <ng-template ngbTabContent>
+        <div class="row">
+          <div class="text-center">
+            <button class="btn btn-sm btn-success" style="background-color: #9B2AB6" routerLink="/change_password"> Change Password </button>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+</div>

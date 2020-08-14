@@ -1,0 +1,6 @@
+<div *ngIf="permission !== undefined">
+  <a class="nav-child-link" routerLink="{{permission.uri}}" routerLinkActive="active" *ngIf="permission.displayed">
+    <i class="menu-icon mdi mdi-{{permission.icon}}"></i>
+    <span class="menu-title">{{permission.name}}</span>
+  </a>
+</div>

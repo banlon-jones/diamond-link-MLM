@@ -1,0 +1,99 @@
+.nav-link {
+  color: #fff;
+    text-transform: uppercase;
+    padding: 1.75rem 1rem;
+    font-family: "Poppins",sans-serif;
+    font-size: .9375rem;
+    font-weight: 400;
+}
+
+.fixed-top {
+  padding: 0;
+}
+
+.banner-text {
+  padding: 160px 0 200px;
+}
+
+.welcome-content-wrapper h2 span {
+  display: block;
+  font-size: 25px;
+  margin-bottom: 7px;
+  color: red;
+}
+
+.welcome-content-wrapper .main-welcome {
+  position: relative;
+  margin: 50px 0;
+}
+.welcome-content-wrapper .red-block-1 .card.lazy-visible {
+  background-size: cover;
+  background-color: #ea4343;
+  height: 350px;
+}
+.welcome-content-wrapper .black-block-1 .card.lazy-visible {
+  background-color: #636363;
+  background-size: cover;
+  height: 350px;
+}
+@media (min-width: 800px) and (max-width: 850px) {
+  .navbar:not(.top-nav-collapse) {
+    background: #1C2331 !important;
+  }
+}
+@media (max-width: 740px) {
+  .full-page-intro {
+    height: 1000px;
+  }
+}
+
+.carousel {
+  height: 100%;
+
+  .carousel-inner {
+    height: 100%;
+
+    .active, .carousel-item {
+      height: 100%;
+    }
+  }
+}
+
+@media (max-width: 776px) {
+  .carousel {
+    height: 100%;
+  }
+}
+
+.navbar {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.page-footer, .top-nav-collapse {
+  background-color: #1C2331;
+}
+
+@media only screen and (max-width: 768px) {
+  .navbar {
+    background-color: #1C2331; 
+  }
+}
+
+.wrapper-footer {
+  background-image: url('../../../assets/images/landing/footer-bg.jpg'); 
+  background-repeat: no-repeat;
+   background-size: cover;
+   padding: 5%;
+}
+
+.wrapper-footer li {
+  color: white;
+  list-style: none;
+}
+
+.wrapper-footer a {
+  color: #d32efb;
+  font-weight: bold;
+  font-size: 1.1em;
+  text-transform: uppercase;
+}

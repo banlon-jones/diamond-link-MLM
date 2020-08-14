@@ -1,0 +1,68 @@
+<!--<p-progressBar mode="indeterminate" [style]="{'height': '6px'}" *ngIf="loading"></p-progressBar>-->
+<p-scrollPanel [style]="{width: '100%', height: '100%'}">
+<div class="row" style="border-bottom: dashed cornflowerblue; margin-bottom: 20px;">
+  <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 d-flex align-items-stretch grid-margin">
+    <div class="flex-grow">
+      <div class="col-12 grid-margin">
+        <div class="card shadow">
+          <div class="card-body text-center">
+            <h4 class="card-title">Initiated by: <b>{{order.customer.name}}</b></h4>
+            <h4 class="card-title">Order #: <b>{{order.number}}</b></h4>
+            <h4 class="card-title text-center">Date: {{order.transactionBean.createdAt | date : 'medium'}}</h4>
+            <h4 class="card-title text-center">Transaction Code: <b>{{order.transactionBean.code}}</b></h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 d-flex align-items-stretch grid-margin">
+    <div class="flex-grow">
+      <div class="col-12 grid-margin">
+        <div class="card shadow">
+          <div class="card-body text-center" *ngIf="order.shippingAddress !== null">
+            <b>Delivery Location</b>
+            <h5 class="card-title">Country: {{order.shippingAddress.country}}</h5>
+            <h5 class="card-title">State: {{order.shippingAddress.state}}</h5>
+            <h5 class="card-title">City: {{order.shippingAddress.city}}</h5>
+            <h5 class="card-title">Address: {{order.shippingAddress.address}}</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 d-flex align-items-stretch grid-margin">
+    <div class="flex-grow">
+      <div class="col-12 grid-margin">
+        <div class="card shadow">
+          <div class="card-body">
+              <table class="table table-bordered">
+                <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of order.details; let i = index;">
+                  <td>{{i + 1}}</td>
+                  <td>{{item.product.name}}</td>
+                  <td>{{item.product.price | number : '3.1-3'}}</td>
+                  <td>{{item.quantity}}</td>
+                  <td>{{(item.product.price * item.quantity) | number : '3.1-3'}}</td>
+                </tr>
+                <tr>
+                  <td colspan="4">Total</td>
+                  <td>{{order.transactionBean.amount | number : '3.1-3'}}</td>
+                </tr>
+                </tbody>
+              </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</p-scrollPanel>

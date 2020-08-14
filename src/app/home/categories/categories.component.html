@@ -1,0 +1,87 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="card col-12">
+      <div class="card-body">
+        <h4 class="card-title"> Categories  </h4><span class="pull-right">
+           <button class="btn btn-sm shadow text-white" style="background-color: #9B2AB6" id="gill" (click)="open(content)"> Add category </button> </span>
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+            <tr>
+              <th> # </th>
+              <th> Name </th>
+              <th> department </th>
+              <th> Actions </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let category of categories; let i = index">
+              <td> {{ i + 1 }} </td>
+              <td> {{category.name}} </td>
+              <td> {{category.department.name}} </td>
+              <td>
+                <button class="btn btn-success btn-sm" (click)="openEditModel(editContent)" (click)="getCategory(category.id)"><i class="mdi mdi-pencil" ></i> Edit </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Add category modal -->
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title"> Add Category </h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="addCategoryForm" (ngSubmit)="addCategory()">
+      <div class="form-group">
+        <label> name</label>
+        <input type="text" class="form-control" placeholder="Enter category name" formControlName="name">
+      </div>
+      <div class="form-group">
+        <label> select department </label>
+        <select class="form-control" formControlName="departmentId" placeholder="Select department">
+          <option *ngFor="let department of departments" value='{{department.id}}'> {{ department.name }}  </option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-sm text-white" style="background-color: #9B2AB6" (click)="c('Save click')" (click)="addCategory()" ><i class="fa fa-share-alt"></i> Save package </button>
+  </div>
+</ng-template>
+
+<!-- edit category modal -->
+<ng-template #editContent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title"> Edit Category </h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="editCategoryForm" (ngSubmit)="updateCategory()">
+      <input type="hidden" formControlName="id"/>
+      <div class="form-group">
+        <label> name</label>
+        <input type="text" class="form-control" placeholder="Enter category name" formControlName="name">
+      </div>
+      <div class="form-group">
+        <label> select department </label>
+        <select class="form-control" formControlName="departmentId">
+          <option *ngFor="let department of departments" value='{{department.id}}'> {{ department.name }}  </option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-sm text-white" style="background-color: #9B2AB6" (click)="c('Save click')" (click)="updateCategory()"> Save changes </button>
+  </div>
+</ng-template>
+

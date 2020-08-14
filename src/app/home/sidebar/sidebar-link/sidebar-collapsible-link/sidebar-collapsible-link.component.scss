@@ -1,0 +1,135 @@
+@import '../../../../../styles';
+.nav-sub-child-link {
+  align-items: center;
+  display: flex;
+  padding: $sidebar-menu-padding;
+  white-space: nowrap;
+  height: $nav-link-height;
+  color: $sidebar-light-menu-color;
+  i {
+    &.menu-arrow {
+      margin-left: auto;
+      margin-right: 0;
+      @include transition-duration(0.2s);
+      @include transition-property(transform);
+      @include transition-timing-function(ease-in);
+      &:before {
+        content: "\F142";
+        font-family: "Material Design Icons";
+        font-size: 18px;
+        line-height: 1;
+        font-style: normal;
+        vertical-align: middle;
+        color: rgba($sidebar-light-menu-color, 0.5);
+      }
+    }
+  }
+  .menu-icon {
+    margin-right: 1.25rem;
+    width: $sidebar-icon-size;
+    line-height: 1;
+    font-size: 18px;
+    color: lighten($sidebar-light-menu-icon-color, 30%);
+    .rtl & {
+      margin-right: 0;
+      margin-left: 1.25rem;
+    }
+  }
+  .menu-title {
+    color: white;
+    display: inline-block;
+    font-size: $sidebar-menu-font-size;
+    line-height: 1;
+    vertical-align: middle;
+  }
+  .badge {
+    margin-left: auto;
+  }
+  &.active {
+    color: purple;
+    background: $sidebar-light-menu-active-color;
+    .menu-title,
+    i {
+      color: purple;
+    }
+  }
+}
+.collapsible-link {
+  align-items: center;
+  display: flex;
+  padding: 16px 30%;
+  white-space: nowrap;
+  height: $nav-link-height;
+  color: $sidebar-light-menu-color;
+  i {
+    &.menu-arrow {
+      margin-left: auto;
+      margin-right: 0;
+      @include transition-duration(0.2s);
+      @include transition-property(transform);
+      @include transition-timing-function(ease-in);
+      &:before {
+        content: "\F142";
+        font-family: "Material Design Icons";
+        font-size: 18px;
+        line-height: 1;
+        font-style: normal;
+        vertical-align: middle;
+        color: rgba($sidebar-light-menu-color, 0.5);
+      }
+    }
+  }
+  &[aria-expanded="true"] {
+    background: $sidebar-light-menu-active-bg;
+    i {
+      &.menu-arrow {
+        @include transform(rotate(90deg));
+      }
+    }
+  }
+  .menu-icon {
+    margin-right: 1.25rem;
+    width: $sidebar-icon-size;
+    line-height: 1;
+    font-size: 18px;
+    color: lighten($sidebar-light-menu-icon-color, 30%);
+    .rtl & {
+      margin-right: 0;
+      margin-left: 1.25rem;
+    }
+  }
+  .menu-title {
+    color: inherit;
+    display: inline-block;
+    font-size: $sidebar-menu-font-size;
+    line-height: 1;
+    vertical-align: middle;
+  }
+  .badge {
+    margin-left: auto;
+  }
+  &.active {
+    color: purple;
+    background: $sidebar-light-menu-active-color;
+    .menu-title,
+    i {
+      color: inherit;
+    }
+  }
+}
+a:hover {
+  background: $sidebar-light-menu-hover-bg;
+  color: purple;
+  text-decoration: none;
+  .menu-title,
+    i {
+      color: inherit;
+    }
+  .fa, .menu-icon {
+    color: purple !important;
+  }
+}
+a {
+  text-decoration: none;
+}
+

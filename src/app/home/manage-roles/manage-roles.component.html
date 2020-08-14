@@ -1,0 +1,24 @@
+<p-toast [style]="{marginTop: '80px'}" position="top-left"></p-toast>
+<p-progressBar mode="indeterminate" [style]="{'height': '6px'}" *ngIf="loading"></p-progressBar>
+<div class="row">
+  <h4>Manage Customer Role</h4>
+  <div class="input-group mb-2 mr-sm-2">
+    <input type="text" class="form-control col-6" id="registrationCode" placeholder="Enter Customer Registration Code" [(ngModel)]="registrationCode">
+    <div class="input-group-prepend">
+      <div class="input-group-text"><a role="button" style="cursor: pointer;" (click)="searchCustomer()"><i class="mdi mdi-search-web"></i> Search </a></div>
+    </div>
+  </div>
+  <div *ngIf="found">
+    Name: {{foundCustomer.name}}
+    <select class="form-control col-6 col-sm-12" [(ngModel)]="roleForAction">
+      <option selected disabled>select a role</option>
+      <option *ngFor="let role of roles" value="{{role}}">{{role}}</option>
+    </select>
+    <div class="input-group mb-2 mr-sm-2" style="margin-top: 10px;">
+      <div class="input-group-prepend">
+        <div class="input-group-text"><a role="button" style="cursor: pointer;" (click)="addRole()"><i class="mdi mdi-plus-circle"></i> Add </a></div>
+        <div class="input-group-text"><a role="button" style="cursor: pointer;" (click)="removeRole()"><i class="mdi mdi-minus-circle"></i> Remove </a></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<div class="signin" style="background-image:url('assets/images/background/mesh.png')">
+  <div class="row" id="login_card">
+    <div class="col-10 col-sm-8 col-md-10 offset-1 col-lg-6 offset-sm-2 offset-md-1 offset-lg-3">
+      <div class="row">
+        <div class="card text-white col-md-6 col-lg-6 shadow" style="background-color: #9B2AB6">
+          <div class="card-body text-center">
+            <div class="text-center">
+              <img src="assets/images/logos/dlc_logo.jpeg" width="100" class="img-fluid" alt="Diamond Link Venture" style="border-radius: 50%">
+            </div>
+            <br><br>
+            <div class="card-title text-white"><h3>Welcome To Diamond Link Conglomerate</h3></div>
+            <p class="card-text">Login or Click on Sign-Up if you don't have an account yet</p>
+            <p class="card-text">
+              <a routerLink="/welcome">Visit our Welcome page</a>
+            </p>
+            </div>
+        </div>
+        <div class="card col-md-6 col-lg-6 shadow" style="background-color: #F6F6F6"><br>
+          <div class="alert alert-success" role="alert" *ngIf="alerting">
+            {{message}}
+          </div>
+          <div class="card-body">
+            <h3 class="card-title text-center"> Signin </h3>
+            <small *ngIf="loginError"> Invalid Username or Password try again </small>
+            <form [formGroup] = "signinForm" (ngSubmit) = "onSubmit()">
+              <div class="row">
+                <div class="form-group col-12">
+                  <input class="form-control form-control-lg" type="text" placeholder=" Username " required formControlName="username">
+                  <small
+                    *ngIf="signinForm.controls['username'].hasError('required') && signinForm.controls['username'].touched">
+                    Invalid username address please enter a valid username
+                  </small>
+                  <input class="form-control form-control-lg" type="password" placeholder=" Password " required formControlName="password">
+                  <small
+                    *ngIf="signinForm.controls['password'].hasError('required') && signinForm.controls['password'].touched">
+                    Invalid email address please enter a valid password
+                  </small>
+                </div>
+              </div>
+              <div class="row">
+                <button type="submit" class="btn col-12 text-white shadow" (click)="showDialog()"
+                        [disabled]="!signinForm.valid" style="background-color: #9B2AB6"> Login </button>
+              </div>
+            </form>
+            <br>
+            <div class="row">
+              <a routerLink="/forgot_password" style="color: blue" class="text-center col-12"> forgot password </a>
+            </div>
+            <br>
+            <div class="row">
+              <button routerLink="/signup" class="col-12 text-black btn shadow"> Sign up </button>
+            </div>
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p-dialog [(visible)]="display" [modal]="true" [responsive]="true" [style]="{width: '90px', minWidth: '90px', height: '70px', textAlign: 'center'}"
+          [baseZIndex]="10000" [closable]="false" [showHeader]="false">
+  <p-progressSpinner [style]="{width: '50px', height: '50px'}" strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+</p-dialog>

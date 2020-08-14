@@ -1,0 +1,80 @@
+<p-progressBar mode="indeterminate" [style]="{'height': '6px'}" *ngIf="loading"></p-progressBar>
+<div class="text-center">
+  <button class="btn btn-sm btn-primary" type="button" (click)="showCurrencyDialog()">See Exchange Rates
+  </button>
+</div>
+<div class="row" *ngIf="alerting">
+  <div class="alert" [class.alert-success]="initiated" [class.alert-danger]="!initiated">
+    {{alertMessage}}
+  </div>
+</div>
+<h4>Make A Withdrawal</h4>
+<p>
+  Current Balance: <b>{{getRatedAmount(currentBalance) | number : '3.1-3'}} {{exCurrency.symbol}} </b>
+</p>
+<p>
+  Available Balance: <b>{{getRatedAmount(availableBalance) | number : '3.1-3'}} {{exCurrency.symbol}} </b>
+</p>
+<div class="row">
+  <div class="input-group mb-2 mr-sm-2">
+    <input type="number" min="0" max="{{availableBalance}}" class="form-control col-4 col-sm-12" id="amount" placeholder="Enter Amount to withDraw" [(ngModel)]="withdrawalAmount">
+    <input type="password" class="form-control col-4 col-sm-12" id="password" placeholder="Enter PayCash Password" [(ngModel)]="password">
+    <div class="input-group-prepend">
+      <div class="input-group-text"><a role="button" style="cursor: pointer;" (click)="initiateWithdrawal()"><i class="mdi mdi-check"></i> OK </a></div>
+    </div>
+  </div>
+</div>
+<p>
+  Withdrawal Amount: <b>{{getRatedAmount(withdrawalAmount) | number : '3.1-3'}} {{exCurrency.symbol}}</b>
+</p>
+<div *ngIf="initiated">
+  <p>
+    Transaction Code: <b>{{initiatedWithdrawal.transactionCode}}</b>
+  </p>
+  <p>
+    Amount: <b>{{getRatedAmount(initiatedWithdrawal.amount) | number : '3.1-3'}} {{exCurrency.symbol}}</b>
+  </p>
+  <p>
+    Transaction Status: <b>{{initiatedWithdrawal.transactionStatus}}</b>
+  </p>
+  <p>
+    Motive: <b>{{initiatedWithdrawal.motive}}</b>
+  </p>
+</div>
+<p-dialog [(visible)]="cdialog" [modal]="true" [responsive]="true" [style]="{width: '350px', minWidth: '200px'}" [minY]="70"
+          [baseZIndex]="10000" [closable]="true">
+  <p-header>
+    See Other currencies and Rates
+  </p-header>
+  <div class="row" *ngIf="!loading">
+    <div class="col-6 card">
+      <div class="card-body">
+        <label>Base:<br> <b> {{getCurrencyObj().base.symbol}} ({{getCurrencyObj().base.name}})</b></label>
+      </div>
+    </div>
+    <div class="col-6 card">
+      <div class="card-body">
+        <label>Rated:<br> <b> {{exCurrency.symbol}} ({{exCurrency.name}})</b></label>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="!loading">
+    <div class="col-12 card">
+      <div class="card-body">
+        <label for="select-currency">Select currency</label>
+        <select class="form-control" id="select-currency" name="select-currency" [(ngModel)]="exchangeCurrency" (change)="getExchangeCurrency()">
+          <option value='"name":"{{getCurrencyObj().base.name}}", "symbol":"{{getCurrencyObj().base.symbol}}", "rate": {{getCurrencyObj().base.rate}}'
+                  selected>{{ getCurrencyObj().base.symbol }} ({{getCurrencyObj().base.name}}) Rate: {{getCurrencyObj().base.rate | number: '3.1-3'}}</option>
+          <option *ngFor="let currency of getCurrencyObj().currencies"
+                  value='"name":"{{currency.name}}","symbol":"{{currency.symbol}}", "rate": {{currency.rate}}'>
+            {{ currency.symbol }} ({{currency.name}}) Rate: {{currency.rate | number: '3.1-3'}}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <button class="btn btn-sm"  (click)="hideCurrencyDialog()">Ok</button>
+  </p-footer>
+</p-dialog>
+

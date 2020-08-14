@@ -1,0 +1,14 @@
+<a style="cursor: pointer;" class="nav-sub-child-link" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseLink">
+  <i class="menu-icon mdi mdi-{{collapsiblePermission.icon}}"></i>
+  <span class="menu-title">{{collapsiblePermission.label}}</span>
+  <span class="fa" [class.fa-minus-circle]="!isCollapsed" [class.fa-plus-circle]="isCollapsed"
+        style="color: white; margin-left: 5px;"></span>
+</a>
+<ul class="nav list-group" id="collapseLink" [ngbCollapse]="isCollapsed">
+  <li class="list-group-item-action" *ngFor="let permission of collapsiblePermission.permissions">
+    <a class="collapsible-link" routerLink="{{permission.uri}}" routerLinkActive="active" >
+      <i class="menu-icon mdi mdi-{{permission.icon}}"></i>
+      <span class="menu-title">{{permission.name}}</span>
+    </a>
+  </li>
+</ul>

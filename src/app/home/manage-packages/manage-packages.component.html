@@ -1,0 +1,109 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="card col-12">
+      <div class="card-body">
+        <h4 class="card-title">List of Packages </h4><span class="pull-right">
+           <button class="btn btn-sm shadow text-white" style="background-color: #9B2AB6" id="gill" (click)="open(content)"> Create package </button> </span>
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th> # </th>
+                <th> Name </th>
+                <th> Description </th>
+                <th> Qualification point </th>
+                <th> Registration point </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let package of packages; let i = index">
+                <td> {{ i + 1 }} </td>
+                <td> {{package.name}} </td>
+                <td> {{package.description}} </td>
+                <td> {{package.qualificationPoints}} </td>
+                <td> {{ package.registrationPoints }} </td>
+                <td>
+                  <button class="btn btn-sm btn-success"(click)="getPackage(package.id)" (click)="openEditModel(editContent)"><i class="mdi mdi-pencil"></i></button>
+                  <button class="btn btn-sm btn-danger"><i class="mdi mdi-delete"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Create package modal -->
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title"> Add Package </h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup] = "createPackageForm" (ngSubmit)="onCreate()">
+      <div class="form-group">
+        <label>package name</label>
+        <input type="text" class="form-control" placeholder="Enter package name" formControlName="name">
+      </div>
+      <div class="form-group">
+        <label> Qualification Points </label>
+        <input type="number" class="form-control" placeholder="Enter package name" formControlName="qualificationPoints">
+      </div>
+      <div class="form-group">
+        <label> Direct Referral Percentage </label>
+        <input type="number" class="form-control" placeholder="Enter package name" formControlName="directReferralPercentage">
+      </div>
+      <div class="form-group">
+        <label> Registration Points </label>
+        <input type="number" class="form-control" placeholder="Enter package name" formControlName="registrationPoints">
+      </div>​​
+      <div class="form-group">
+        <label> Descriptions </label>
+        <textarea class="form-control" formControlName="description" rows="5"></textarea>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-sm text-white" style="background-color: #9B2AB6" (click)="c('Save click')" (click)="onCreate()" > Save package </button>
+  </div>
+</ng-template>
+
+<!-- edit package modal -->
+<ng-template #editContent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title"> Edit Package </h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup] = "editPackageForm" (ngSubmit)="updatePackage()">
+      <div class="form-group">
+        <label>package name</label>
+        <input type="text" class="form-control" placeholder="Enter package name" formControlName="name">
+      </div>
+      <div class="form-group">
+        <label> Qualification Points </label>
+        <input type="number" class="form-control" placeholder="Enter package name" formControlName="qualificationPoints">
+      </div>
+      <div class="form-group">
+        <label> Direct Referral Percentage </label>
+        <input type="number" class="form-control" placeholder="Enter package name" formControlName="directReferralPercentage">
+      </div>
+      <div class="form-group">
+        <label> Registration Points </label>
+        <input type="number" class="form-control" placeholder="Enter package name" formControlName="registrationPoints">
+      </div>​​
+      <div class="form-group">
+        <label> Descriptions </label>
+        <textarea class="form-control" formControlName="description" rows="5"></textarea>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-sm text-white" style="background-color: #9B2AB6" (click)="c('Save click')" (click)="updatePackage()" > Save package </button>
+  </div>
+</ng-template>

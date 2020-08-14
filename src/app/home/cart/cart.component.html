@@ -1,0 +1,89 @@
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<div class="row">
+  <div class="col-10 offset-1 shadow">
+    <table app-cart-table="" class="table table-responsive table-responsive-md">
+      <tr app-cart-table-row *ngFor="let cartItem of cartItems; let i = index" (onUpdateCart)="onUpdateCart()"
+          [cartItem]="cartItem" [price]="cartItem.product.price" [itemIndex]="i"></tr>
+    </table>
+    <!--<table class="table table-responsive table-responsive-md">
+      <thead>
+        <tr>
+          <th> # </th>
+          <th> PRODUCT  </th>
+          <th> PRICE </th>
+          <th> QUANTITY </th>
+          <th> SUBTOTAL </th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of cartItems; let i = index">
+
+          <td>{{ i + 1 }}</td>
+          <td> {{ item.product.name }} </td>
+          <td> {{ item.product.price }} </td>
+          <td>
+            <input class="form-control" type="number" value="{{item.quantity}}" [(ngModel)]="quantity" (change)="updateCart(item.product.id, quantity)"/>
+          </td>
+          <td>
+            {{ item.product.price * item.quantity }}
+          </td>
+          <td>
+            <i (click)="removeItem(item.product.id)" class="mdi mdi-delete"> </i>
+          </td>
+        </tr>
+      </tbody>
+    </table>-->
+    <br><br>
+    <div class="row">
+      <button class="col-6 btn btn-sm btn-success" routerLink="/products"> Continue shopping </button>
+      <button class="col-6 btn btn-sm btn-danger" (click)="emptyCart()" > Empty cart </button>
+    </div>
+  </div>
+</div><br/><br/>
+<div class="row">
+  <div class="col-8 offset-2">
+    <div class="card shadow">
+      <div class="card-header">
+        Delivery Location
+      </div>
+      <div class="form-group" style="padding: 0px 10px 0px 10px">
+        <!--<i class="pi pi-spin pi-spinner" *ngIf="loading" style="font-size: 3em"></i>-->
+        <label for="country"> Country </label>
+        <select class="form-control" id="country" [(ngModel)]="countryId">
+          <option disabled selected>select your country</option>
+          <option *ngFor="let country of countries" value="{{country.id}}">{{ country.name }}</option>
+        </select>
+      </div>
+      <div class="form-group" style="padding: 0px 10px 0px 10px">
+        <label for="state"> State </label>
+        <input class="form-control" type="text" id="state" [(ngModel)]="state">
+      </div>
+      <div class="form-group" style="padding: 0px 10px 0px 10px">
+        <label for="city"> City </label>
+        <input class="form-control" type="text" id="city" [(ngModel)]="city">
+      </div>
+      <div class="form-group" style="padding: 0px 10px 0px 10px">
+        <label for="address"> Address </label>
+        <input class="form-control" type="text" id="address" [(ngModel)]="address">
+      </div>
+    </div>
+  </div>
+</div><br /><br />
+<div class="row">
+  <div class="col-8 offset-2">
+    <div class="card shadow">
+      <div class="card-header">
+        Cart Subtotal
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><strong> TOTAL : </strong> PCH {{getCartTotal() | number: '3.1-3'}} </li>
+        <!--<li class="list-group-item"><strong> TAXES : </strong> 0 </li>-->
+        <li class="list-group-item"><strong> SHIPPING FEE : </strong> ~~ </li>
+        <!--<li class="list-group-item"><strong> GRAND TOTAL : </strong> 1233554 </li>-->
+        <li  class="list-group-item">
+          <button class="btn btn-success" style="width: 100%;" [disabled]="!canCheckout()" (click)="checkoutCart()">PROCEED TO CHECKOUT</button> </li>
+      </ul>
+    </div>
+  </div>
+</div>

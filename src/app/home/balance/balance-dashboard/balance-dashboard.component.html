@@ -1,0 +1,113 @@
+<p-progressBar mode="indeterminate" [style]="{'height': '6px'}" *ngIf="loading"></p-progressBar>
+<div class="row">
+  <div class="col-md-6 d-flex align-items-stretch grid-margin">
+    <div class="row flex-grow">
+      <div class="col-12 grid-margin">
+        <div class="card shadow">
+          <div class="card-body text-center">
+            <h4 class="card-title">PayCash Account Balance</h4>
+            <p class="card-description">
+              Account name: {{accountBalance.name}}
+            </p>
+            <h4 class="card-title">Current Balance: <strong>{{accountBalance.currentBalance | number: '3.1-3' }} PCH</strong></h4>
+            <h4 class="card-title">Available Balance: <strong>{{accountBalance.availableBalance | number: '3.1-3' }} PCH</strong></h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 d-flex align-items-stretch grid-margin">
+    <div class="row flex-grow">
+      <div class="col-12 grid-margin">
+        <div class="card shadow">
+          <div class="card-body">
+            <h4 class="card-title text-center">PayCash Account Statement</h4>
+
+            <form [formGroup]="statementForm" (ngSubmit)="onSubmit()">
+
+              <div class="form-group row">
+                <!--<i class="pi pi-spin pi-spinner" *ngIf="loading" style="font-size: 3em"></i>-->
+                <div class="col-md-6">
+                  <label for="period"> Period </label>
+                  <select class="form-control" id="period" formControlName="period">
+                    <option disabled [selected]="true">select a period</option>
+                    <option *ngFor="let period of periods" value="{{period}}">{{ period }}</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="strict"> Strictly? <input type="checkbox" class="form-control" id="strict"  formControlName="strict"> </label>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-6">
+                  <label for="startDate"> Start Date * </label>
+                  <input type="date" class="form-control" id="startDate" placeholder="Select Date" formControlName="startDate">
+                </div>
+                <div class="col-md-6">
+                  <label for="endDate"> End Date</label>
+                  <input type="date" class="form-control" id="endDate" placeholder="Select Date" formControlName="endDate">
+                </div>
+              </div>
+              <div class="row">
+                <button type="submit" class="btn col-12 text-white shadow"
+                        [disabled]="!statementForm.valid" style="background-color: #9B2AB6"> Ok </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p-scrollPanel [style]="{width: '100%', height: '100%'}">
+<div class="row" *ngIf="statement !== undefined">
+  <div class="d-flex align-items-stretch grid-margin">
+  <div class="row flex-grow">
+    <div class="col-12 grid-margin">
+      <div class="card shadow">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-12">
+              <h4 class="card-title text-center">PayCash Account Statement</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              From: <b>{{statement.period.startDate | date: 'medium'}}</b>
+            </div>
+            <div class="col-md-6">
+              To: <b>{{statement.period.endDate | date: 'medium'}}</b>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              Opening Balance: <b>{{statement.openingBalance | number: '3.1-3'}}</b>
+            </div>
+            <div class="col-md-6">
+             Total Inflows: <b>{{statement.inflows | number: '3.1-3'}}</b>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              Total Outflows: <b>{{statement.outflows | number: '3.1-3'}}</b>
+            </div>
+            <div class="col-md-6">
+              Closing Balance: <b>{{statement.closingBalance | number: '3.1-3'}}</b>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-title">
+            {{statement.notes.content}}
+          </p>
+            <table app-account-listing class="table table-hover table-bordered">
+              <tr app-account-listing-row *ngFor="let listingRow of listingRows" [listingRow]="listingRow"></tr>
+            </table>
+          <button style="margin: 10px; width: 100%;" *ngIf="hasNextPage()" class="btn btn-sm btn-outline-success" (click) = "loadNextPage()" >Load More .. </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+</p-scrollPanel>

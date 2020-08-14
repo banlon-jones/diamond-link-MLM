@@ -1,0 +1,14 @@
+<p-progressBar mode="indeterminate" [style]="{'height': '6px'}" *ngIf="progressBar"></p-progressBar>
+<form [formGroup]="addNodeForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    Under: <b style="font-size: 14px;">{{upLineRegistrationCode}}</b> <br />
+    <label for="referral">Select DownLine </label>
+    <select class="form-control" id="referral" formControlName="customerId">
+      <option disabled selected>select downLine</option>
+      <option *ngFor="let referral of referrals" value="{{referral.customerId}}">{{ referral.registrationCode }}</option>
+    </select>
+  </div>
+  <div class="row">
+    <button type="submit" class="btn col-12 text-white shadow" style="background-color: #9B2AB6"> Add </button>
+  </div>
+</form>

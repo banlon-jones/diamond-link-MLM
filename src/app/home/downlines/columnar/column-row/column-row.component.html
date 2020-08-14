@@ -1,0 +1,15 @@
+<a (click)="displayDownLines(downline.customerId)" placement="right" [ngbTooltip]="tipLine" style="cursor: pointer;">{{downline.upLineRegistrationCode}} <i class="fa" [class.fa-minus-circle]="isSet" [class.fa-plus-circle]="!isSet"></i></a>
+      <ng-template #tipLine>
+        <ul class="list-group" style="color: blueviolet;">
+          <li class="list-group-item list-group-item-primary"><img src="{{downline.imageUrl == null ? 'assets/images/logos/icon.jpg' : base_uri + downline.imageUrl}}" width="32">
+            {{downline.label}}
+          </li>
+        </ul>
+      </ng-template>
+<div *ngIf="isSet">
+  <ul app-column-rack class="list-group list-group-flush">
+      <li class="list-group-item" *ngFor="let line of downlines">
+        <b app-column-row  [downline]="line"></b>
+      </li>
+  </ul>
+</div>

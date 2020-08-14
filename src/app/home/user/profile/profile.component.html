@@ -1,0 +1,54 @@
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<div class="row col-10 col-md-10 col-lg-10 offset-1 offset-md-1 offset-lg-1">
+  <div class="col-12 col-md-3 col-lg-3" style="padding: 10px">
+    <div class="card">
+      <form [formGroup] = "avatarForm" enctype="multipart/form-data">
+        <div>
+          <img src="{{getProfile().avatar == null ? 'assets/images/logos/icon.jpg' : image_base_uri + getProfile().avatar}}" class="card-img-top" alt=" ProfilePicture ">
+          <div class="form-group col-12">
+            <input class="form-control form-control-lg" type="file" placeholder=" profile picture " required formControlName="avatar"
+            (change)="detectFiles($event)">
+            <p-progressBar mode="indeterminate" [style]="{'height': '6px'}" *ngIf="progressBar"></p-progressBar>
+            <small
+              *ngIf="avatarForm.controls['avatar'].hasError('required') && avatarForm.controls['avatar'].touched">
+              Please select a valid photo
+            </small>
+          </div>
+        </div>
+        <div class="card-body text-center">
+          <button [disabled]="!selectedFiles" (click)="onAvatarFormSubmit()" class="btn btn-success btn-sm text-center"> upload picture </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="col-md-9 col-lg-9 col-12" >
+    <div class="card-body">
+          <div>
+            <p><span><b>Name :</b></span> {{ getProfile().firstName + ' ' + getProfile().lastName }} </p>
+          </div>
+          <div>
+            <p><span> <b>Phone :</b></span> {{ getProfile().phone }} </p>
+          </div>
+          <div>
+            <p><span> <b>City :</b></span> {{ getProfile().city }} </p>
+          </div>
+          <div>
+            <p><span><b>Address :</b> </span> {{ getProfile().address }} </p>
+          </div>
+          <div>
+            <p><span><b>Nationality :</b> </span> {{ getProfile().nationality }} </p>
+          </div>
+          <div>
+            <p><span> <b>registrationcode :</b></span> {{ getProfile().registrationCode }} </p>
+          </div>
+          <div>
+            <p><span> <b>Zipcode:</b></span> {{ getProfile().zipCode }} </p>
+          </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-10 offset-1">
+    <app-edit-profile></app-edit-profile>
+  </div>
+</div>
